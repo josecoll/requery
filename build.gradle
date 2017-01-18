@@ -9,7 +9,7 @@ task wrapper(type: Wrapper) {
 buildscript {
     ext.kotlin_version = '1.0.6'
     ext.jpa_version = '2.1.1'
-    ext.requery_version = '1.1.1'
+    ext.requery_version = '1.1.0'
 
     repositories {
         jcenter()
@@ -26,6 +26,7 @@ apply plugin: 'kotlin-jpa'
 apply plugin: 'kotlin-kapt'
 
 repositories {
+    mavenLocal()
     jcenter()
     mavenCentral()
 }
@@ -35,4 +36,15 @@ dependencies {
     kapt "io.requery:requery-processor:$requery_version"
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compile "org.eclipse.persistence:javax.persistence:$jpa_version"
+    
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.h2database:h2:1.4.191'
+}
+
+sourceSets {
+    main {
+        kotlin {
+            srcDir "${buildDir}/generated/source/kapt/main/"
+        }
+    }
 }
